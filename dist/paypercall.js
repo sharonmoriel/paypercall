@@ -155,7 +155,7 @@ module.exports = function (opt) {
               case 18:
                 amount = req.params.amount;
                 currency = req.params.currency || defCurrency;
-                description = req.params.description || 'Pay to call ' + req.method + ' ' + req.path;
+                description = req.body.description || 'Pay to call ' + req.method + ' ' + req.path;
                 _context3.next = 23;
                 return charge.invoice({
                   amount: amount, currency: currency,

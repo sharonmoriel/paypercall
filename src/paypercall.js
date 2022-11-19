@@ -49,7 +49,7 @@ module.exports = opt => {
     } else {
       let amount = req.params.amount;
       let currency = req.params.currency || defCurrency;
-      let description = req.params.description || `Pay to call ${req.method} ${req.path}`;
+      let description = req.body.description || `Pay to call ${req.method} ${req.path}`;
       const inv = await charge.invoice({
         amount, currency
       , metadata: { source: 'paypercall', req: only(req, 'method', 'path') }
