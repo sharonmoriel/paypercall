@@ -35,7 +35,7 @@ module.exports = opt => {
   })
 
   // Middleware
-  return (amount, currency=defCurrency) => pwrap(async (req, res, next) => {
+  return () => pwrap(async (req, res, next) => {
     const invid = req.get('X-Token') && parseToken(req)
         , inv   = invid && await charge.fetch(invid)
         , paid  = inv && inv.status === 'paid' && inv.paid_at > now() - accessExp
@@ -47,10 +47,13 @@ module.exports = opt => {
       req.invoice = inv
       next()
     } else {
+      let amount = req.params.amount;
+      let currency = req.params.currency || defCurrency;
+      let description = req.params.description || `Pay to call ${req.method} ${req.path}`;
       const inv = await charge.invoice({
         amount, currency
       , metadata: { source: 'paypercall', req: only(req, 'method', 'path') }
-      , description: `Pay to call ${req.method} ${req.path}`
+      , description: description 
       , expiry: invoiceExp
       })
 
