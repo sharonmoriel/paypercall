@@ -60,7 +60,7 @@ module.exports = opt => {
       res.status(402) // Payment Required
          .type('application/vnd.lightning.bolt11')
          .set('X-Token', makeToken(req, inv.id))
-         .send(inv.payreq)
+         .send(inv)
     }
   })
 }
