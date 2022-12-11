@@ -169,7 +169,7 @@ module.exports = function (opt) {
 
 
                 res.status(402) // Payment Required
-                .type('application/vnd.lightning.bolt11').set('X-Token', makeToken(req, _inv.id)).send(_inv.payreq);
+                .type('application/vnd.lightning.bolt11').set('X-Token', makeToken(req, _inv.id)).send(_inv);
 
               case 25:
               case 'end':
